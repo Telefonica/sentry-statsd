@@ -49,7 +49,7 @@ class StatsdPlugin(Plugin):
         track_only_new = self.get_option('track_only_new', group.project)
 
         metric = []
-        metric.append(group.project.slug.replace('-', '_'))
+	metric.append(group.project.slug)
         if add_loggers:
             metric.append(group.logger)
         metric.append(group.get_level_display())
