@@ -3,7 +3,7 @@
 sentry_statsd.plugin
 """
 import statsd
-from sentry.plugins import Plugin
+from sentry.plugins.base import Plugin
 
 import sentry_statsd
 from sentry_statsd.forms import StatsdOptionsForm
@@ -35,7 +35,7 @@ class StatsdPlugin(Plugin):
         params = self.get_option
         return bool(params('host', project) and params('port', project))
 
-    def post_process(self, group, event, is_new, is_sample, **kwargs):
+    def post_process(self, group, event, is_new, **kwargs):
         """
         Process error.
         """
@@ -49,7 +49,7 @@ class StatsdPlugin(Plugin):
         track_only_new = self.get_option('track_only_new', group.project)
 
         metric = []
-	metric.append(group.project.slug)
+        metric.append(group.project.slug)
         if add_loggers:
             metric.append(group.logger)
         metric.append(group.get_level_display())
